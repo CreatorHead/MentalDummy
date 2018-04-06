@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nullthinker.mentaldummy.beans.User;
-import com.nullthinker.mentaldummy.model.dao.MentalDummyDAO;
-import com.nullthinker.mentaldummy.model.helper.SHAHashing;
+import com.nullthinker.mentaldummy.mode.services.SHAHashing;
+import com.nullthinker.mentaldummy.model.dao.DAO;
 
 @Controller
 @RequestMapping("/login")
 public class LoginController {
 	@Autowired
-	private MentalDummyDAO mentalDummyDAO;
+	private DAO mentalDummyDAO;
 
 	@Autowired
 	private Environment environment;

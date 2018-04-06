@@ -26,7 +26,7 @@ public class User implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
-	@NotNull(message="userid should not be null")
+	@NotNull(message="Userid should not be null")
 	private int userid;
 
 	@NotNull(message="First name should not be null")

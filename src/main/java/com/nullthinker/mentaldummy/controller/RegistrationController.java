@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nullthinker.mentaldummy.beans.User;
-import com.nullthinker.mentaldummy.model.dao.MentalDummyDAO;
-import com.nullthinker.mentaldummy.model.helper.SHAHashing;
+import com.nullthinker.mentaldummy.mode.services.SHAHashing;
+import com.nullthinker.mentaldummy.model.dao.DAO;
 
 @Controller
 @RequestMapping("/signup")
@@ -19,7 +19,7 @@ import com.nullthinker.mentaldummy.model.helper.SHAHashing;
 public class RegistrationController {
 
 	@Autowired
-	private MentalDummyDAO mentalDummyDAO;
+	private DAO mentalDummyDAO;
 
 	@RequestMapping(value="/page",method=RequestMethod.GET)
 	public String registerPage(){
