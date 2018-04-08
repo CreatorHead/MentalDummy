@@ -24,4 +24,11 @@ public interface DAO {
 	 * @return
 	 */
 	public User login(User user);
+	
+	/**
+	 * Used to get the User by email
+	 * @param user
+	 * @return
+	 */
+	public User findByEmail(User user);
 }

@@ -14,10 +14,10 @@
 		String msg = request.getParameter("msg");
 		if (msg != null) {
 	%>
-			<h4 id="redColor"><%=msg%></h4>
+			<h3 id="redColor"><%=msg%></h3>
 	<%} %>
 	
-	<form action="./submit" method="post">
+	<form action="./login/submit" method="post">
 		<div class="imgcontainer">
 			<img src="../../MentalDummy/resources/images/img_avatar2.png"
 				alt="Avatar" class="avatar">

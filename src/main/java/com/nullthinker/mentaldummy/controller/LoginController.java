@@ -15,7 +15,6 @@ import com.nullthinker.mentaldummy.mode.services.SHAHashing;
 import com.nullthinker.mentaldummy.model.dao.DAO;
 
 @Controller
-@RequestMapping("/login")
 public class LoginController {
 	@Autowired
 	private DAO mentalDummyDAO;
@@ -23,13 +22,13 @@ public class LoginController {
 	@Autowired
 	private Environment environment;
 
-	@RequestMapping(value="/page",method=RequestMethod.GET)
+	@RequestMapping(value="/login",method=RequestMethod.GET)
 	public String loginPage(){
 		return "login";
 	}
 	
 	
-	@RequestMapping(value="/submit",method=RequestMethod.POST)
+	@RequestMapping(value="/login/submit",method=RequestMethod.POST)
 	public String login(@RequestParam("email") String email,
 			@RequestParam("password") String password,
 			Model model, 
@@ -56,7 +55,7 @@ public class LoginController {
 			}
 		}else {
 			model.addAttribute("msg","Login failed. Please provide a valid email and password");
-			redirect = "redirect:/login/page";
+			redirect = "redirect:/login";
 		}
 		
 		return redirect;
