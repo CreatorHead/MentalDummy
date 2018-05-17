@@ -3,10 +3,14 @@ package com.nullthinker.mentaldummy.beans;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -64,14 +68,16 @@ public class User implements Serializable {
 	private String gender;
 
 	@NotNull(message="Password should not be null")
-	@Size(min=8,max=1000, message="Password should be between 1 to 1000 chars")
+	@Size(min=8,max=1000, message="Password should be between 8 to 1000 chars")
 	@Column(name="password")
 	private String password;
 	
 	@NotNull
 	@Size(max=20)
-	@Column(name="user_type")
-	private String type;
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name="user_roles",joinColumns=@JoinColumn(name="user_id"))
+	@Column(name="role")
+	private List<String> roles;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name="creation_date")
@@ -87,6 +93,14 @@ public class User implements Serializable {
 	private Boolean isActive;
 	
 	/**
+	 * Get the User ID
+	 * @return
+	 */
+	public BigInteger getUserid() {
+		return userid;
+	}
+	
+	/**
 	 * To Get the user is Active
 	 * @return
 	 */
@@ -99,20 +113,7 @@ public class User implements Serializable {
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
 	}
-	/**
-	 * To get the type of user
-	 * @return
-	 */
-	public String getType() {
-		return type;
-	}
-	/**
-	 * To set the type of user
-	 * @param type
-	 */
-	public void setType(String type) {
-		this.type = type;
-	}
+	
 	/**
 	 * To get the user first name.
 	 * @return
@@ -209,6 +210,22 @@ public class User implements Serializable {
 		this.creationDate = creationDate;
 	}
 	
+	/**
+	 * Get Roles of a user
+	 * @return
+	 */
+	public List<String> getRoles() {
+		return roles;
+	}
+
+	/**
+	 * Set Roles of a user
+	 * @param roles
+	 */
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
+	}
+
 	/**
 	 * To Get the Confirmation Details
 	 * @return

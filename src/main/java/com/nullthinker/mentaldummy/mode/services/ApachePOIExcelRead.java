@@ -6,7 +6,9 @@ import java.util.Iterator;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ApachePOIExcelRead {
 	public StringBuilder reader(final String FILE_NAME) throws Exception {
 		StringBuilder result = new StringBuilder();

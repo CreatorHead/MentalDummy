@@ -3,7 +3,7 @@ package com.nullthinker.mentaldummy.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
+//import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +19,8 @@ public class LoginController {
 	@Autowired
 	private DAO mentalDummyDAO;
 
-	@Autowired
-	private Environment environment;
+//	@Autowired
+//	private Environment environment;
 
 	@RequestMapping(value="/login",method=RequestMethod.GET)
 	public String loginPage(){
@@ -41,17 +41,18 @@ public class LoginController {
 		user = mentalDummyDAO.login(user);
 		if(user != null) {
 			httpSession.setAttribute("user", user);
-			if(user.getType().equals(environment.getRequiredProperty("admin"))) {
+			System.out.println(user.getRoles().get(0));
+			if(user.getRoles().contains("admin")) {
 				//for admin
-				redirect= "redirect:adminHome";
+				redirect= "redirect:../adminHome";
 			}
-			else if(user.getType().equals(environment.getRequiredProperty("normal"))) {
-				//for normal
-				redirect= "redirect:normalHome";
+			else if(user.getRoles().contains("user")) {
+				//for user
+				redirect= "redirect:../user/home";
 			}
-			else if(user.getType().equals(environment.getRequiredProperty("examiner"))) {
+			else if(user.getRoles().contains("examiner")) {
 				//for examiner
-				redirect= "redirect:examinerHome";
+				redirect= "redirect:../examinerHome";
 			}
 		}else {
 			model.addAttribute("msg","Login failed. Please provide a valid email and password");

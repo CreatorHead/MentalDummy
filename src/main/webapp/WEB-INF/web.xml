@@ -21,7 +21,7 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 		<multipart-config>
-			<location>F:\Files\Uploads\excel</location>
+			<location>/home/user/Uploads</location>
 			<max-file-size>4194304</max-file-size>
 			<max-request-size>8388608</max-request-size>
 		</multipart-config>

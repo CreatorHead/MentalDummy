@@ -3,6 +3,7 @@ package com.nullthinker.mentaldummy.model.dao;
 
 
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.nullthinker.mentaldummy.beans.User;
+import com.nullthinker.mentaldummy.beans.UserConfirmationDetails;
 
 @Repository
 public class DAOHibernateImpl implements DAO {
@@ -68,7 +70,9 @@ public class DAOHibernateImpl implements DAO {
 			e.printStackTrace();
 			user = null;
 		}finally {
-			session.close();
+			if(session != null)
+				session.close();
+			
 		}
 		return user;
 	}
@@ -97,4 +101,70 @@ public class DAOHibernateImpl implements DAO {
 		return null;
 	}
 
+	/**
+	 * Finds a User By Confirmation Token
+	 */
+	@Override
+	public User findByConfirmationToken(String token) {
+		User user = null;
+		Session session = null;
+		try {
+			session = sessionFactory.openSession();
+			String qry="From User user, UserConfirmationDetails ucd"
+					+ " where user.confirmationDetails=ucd.confirmationId "
+					+ " and ucd.confirmationToken=:token";
+
+			session = sessionFactory.openSession();
+			Query query = session.createQuery(qry);
+			query.setParameter("token", token);
+			@SuppressWarnings("unchecked")
+			List<Object> users = query.list();
+			Iterator<Object> itr = users.iterator();
+			while(itr.hasNext()){
+				   Object[] obj = (Object[]) itr.next();
+				   user = (User)obj[0];  
+				}
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			user = null;
+		}finally{
+			if(session != null) 
+				session.close();
+			
+		}
+		return user;
+	}
+
+	
+	@Override
+	public User updateUser(User user) {
+		Session session = null;
+		try {
+			session = sessionFactory.openSession();
+
+			session.getTransaction().begin();
+			User u = session.get(User.class, user.getUserid());
+			UserConfirmationDetails ucd = u.getConfirmationDetails();
+			ucd.setEnabled(user.getConfirmationDetails().isEnabled());
+			ucd.setConfirmationToken(user.getConfirmationDetails().getConfirmationToken());
+			u.setEmail(user.getEmail());
+			u.setFirstname(user.getFirstname());
+			u.setGender(user.getGender());
+			u.setIsActive(user.getIsActive());
+			u.setLastname(user.getLastname());
+			u.setPassword(user.getPassword());
+			u.setRoles(user.getRoles());
+			session.getTransaction().commit();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			user = null;
+		}finally {
+			if(session != null) {
+				session.close();
+			}
+		}
+		return user;
+	}
+
+	
 }

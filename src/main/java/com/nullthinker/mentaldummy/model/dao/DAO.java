@@ -31,4 +31,13 @@ public interface DAO {
 	 * @return
 	 */
 	public User findByEmail(User user);
+	
+	/**
+	 * Find User by Confirmation Token
+	 * @param token
+	 * @return
+	 */
+	public User findByConfirmationToken(String token);
+	
+	public User updateUser(User user);
 }
