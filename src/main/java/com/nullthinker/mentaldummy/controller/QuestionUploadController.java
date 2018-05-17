@@ -2,13 +2,14 @@ package com.nullthinker.mentaldummy.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.Part;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -20,13 +21,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 
 import com.nullthinker.mentaldummy.mode.services.ApachePOIExcelRead;
-import com.nullthinker.mentaldummy.mode.services.MimeValidation;
 
 @Controller @PropertySource(value = { "classpath:fileUpload.properties" })
 public class QuestionUploadController {
 	
 	@Autowired private Environment environment;
-//	@Autowired private MimeValidation mimeValidation;
 	@Autowired private ApachePOIExcelRead apachePOIExcelRead;
 	
 	@RequestMapping(value="upload/questions",method=RequestMethod.GET)
@@ -40,27 +39,39 @@ public class QuestionUploadController {
 			@RequestParam("subject")String subject,@RequestParam("duration") Integer duration,
 			@RequestParam("passMarks") Double passMarks,@RequestParam("diffLvl")String diffLevel,
 			@RequestParam("passkey") String passKey
-			) throws Exception{
+			){
 		String state = "";
 		try {
 			String filePath = environment.getRequiredProperty("uploadLocation")+"/"+file.getSubmittedFileName();
-//			System.out.println(filePath);
 			
 			//to write a file in a defaut mutipart location
 			file.write(file.getSubmittedFileName());
 			
-			StringBuilder csvFormat = apachePOIExcelRead.reader(filePath);
-			System.out.println(csvFormat);
+			
+			try {
+				List<StringBuilder> csvFormatList = apachePOIExcelRead.reader(filePath);
+			} catch (Exception e) {
+				e.printStackTrace();
+				state = e.getMessage();
+				model.addAttribute("msg",state);
+				return "redirect:../questions";
+			}
+			
 			//converting input stream to bytes
 //			byte[] fileBytes = FileUtils.readFileToByteArray(new File(filePath));
 			
-			//to delete file
-		    File fileToDelete = FileUtils.getFile(filePath);
-		    boolean success = FileUtils.deleteQuietly(fileToDelete);
+			//Get the content type
+//			String mimeType = Files.probeContentType(Paths.get(filePath));
+//			System.out.println(mimeType);
 			
 			//checking the Mime Type
 //			String mimeType = mimeValidation.getMimeType(fileBytes);
 //			System.out.println(mimeType);
+
+			//to delete file
+		    File fileToDelete = FileUtils.getFile(filePath);
+		    boolean success = FileUtils.deleteQuietly(fileToDelete);
+			
 			
 			ArrayList<String> mimeList = new ArrayList<>();
 			mimeList.add("application/vnd.ms-excel");
