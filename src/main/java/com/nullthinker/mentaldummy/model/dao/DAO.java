@@ -1,8 +1,10 @@
 package com.nullthinker.mentaldummy.model.dao;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
-
+import com.nullthinker.mentaldummy.beans.Subject;
 import com.nullthinker.mentaldummy.beans.User;
 
 /**
@@ -45,4 +47,7 @@ public interface DAO {
 	 * @return
 	 */
 	public User updateUser(User user);
+	
+	
+	public List<Subject> getSubjects();
 }

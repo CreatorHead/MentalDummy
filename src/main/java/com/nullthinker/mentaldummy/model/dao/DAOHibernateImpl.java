@@ -13,6 +13,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.nullthinker.mentaldummy.beans.Subject;
 import com.nullthinker.mentaldummy.beans.User;
 import com.nullthinker.mentaldummy.beans.UserConfirmationDetails;
 
@@ -82,7 +83,6 @@ public class DAOHibernateImpl implements DAO {
 		try {
 			Session session = sessionFactory.openSession();
 			String loginHql="From User user where user.email=:email";
-			session = sessionFactory.openSession();
 			session.getTransaction().begin();
 			Query query = session.createQuery(loginHql);
 			query.setParameter("email", user.getEmail());
@@ -114,7 +114,6 @@ public class DAOHibernateImpl implements DAO {
 					+ " where user.confirmationDetails=ucd.confirmationId "
 					+ " and ucd.confirmationToken=:token";
 
-			session = sessionFactory.openSession();
 			Query query = session.createQuery(qry);
 			query.setParameter("token", token);
 			@SuppressWarnings("unchecked")
@@ -135,7 +134,7 @@ public class DAOHibernateImpl implements DAO {
 		return user;
 	}
 
-	
+	//TODO be careful while updating the user
 	@Override
 	public User updateUser(User user) {
 		Session session = null;
@@ -164,6 +163,22 @@ public class DAOHibernateImpl implements DAO {
 			}
 		}
 		return user;
+	}
+
+	@Override
+	public List<Subject> getSubjects() {
+		try {
+			Session session = sessionFactory.openSession();
+			String subjectQuery="From Subject";
+			session.getTransaction().begin();
+			Query query = session.createQuery(subjectQuery);
+			@SuppressWarnings("unchecked")
+			List<Subject> subjects = query.list();
+			return subjects;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	
