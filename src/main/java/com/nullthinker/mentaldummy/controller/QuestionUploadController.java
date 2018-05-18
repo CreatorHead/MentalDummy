@@ -2,8 +2,6 @@ package com.nullthinker.mentaldummy.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,10 +26,10 @@ public class QuestionUploadController {
 	@Autowired private Environment environment;
 	@Autowired private ApachePOIExcelRead apachePOIExcelRead;
 	
-	@RequestMapping(value="upload/questions",method=RequestMethod.GET)
-	public String uploadFile(){
-		return "fileUpload";
-	}
+//	@RequestMapping(value="upload/questions",method=RequestMethod.GET)
+//	public String uploadFile(){
+//		return "fileUpload";
+//	}
 
 
 	@RequestMapping(value="upload/submit/questions",method=RequestMethod.POST)
@@ -70,14 +68,13 @@ public class QuestionUploadController {
 
 			//to delete file
 		    File fileToDelete = FileUtils.getFile(filePath);
-		    boolean success = FileUtils.deleteQuietly(fileToDelete);
+		    FileUtils.deleteQuietly(fileToDelete);
 			
 			
 			ArrayList<String> mimeList = new ArrayList<>();
 			mimeList.add("application/vnd.ms-excel");
 			mimeList.add("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 			
-			//TODO File Validation
 //			if(!(mimeList.contains(mimeType))) {
 //				state = "Only Spreadsheets are supported";
 //				model.addAttribute("msg",state);

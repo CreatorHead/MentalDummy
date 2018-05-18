@@ -14,7 +14,6 @@
 	href="../../MentalDummy/resources/css/questionUpload/questionUpload.css">
 </head>
 <body>
-	<jsp:include page="/WEB-INF/views/Header.jsp" />
 	<div class="container container-table">
 		<div class='row vertical-center-row'>
 			<div class="panel panel-default">
@@ -109,7 +108,6 @@
 		</div>
 		<!-- panel -->
 	</div>
-	<jsp:include page="/WEB-INF/views/Footer.jsp" />
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script
