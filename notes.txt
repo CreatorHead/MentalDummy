@@ -1,0 +1,4 @@
+# Change the upload file location in multipart config in web.xml and /resources/fileUpload.txt
+
+# Remember to change the db credentials
+

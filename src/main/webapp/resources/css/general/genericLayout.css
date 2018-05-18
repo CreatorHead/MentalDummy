@@ -1,0 +1,14 @@
+.panel-default > .panel-heading {
+  background-color: #4caf50;
+  color: #ffffd3
+}
+
+.elementColor {
+	background-color: #5f5f5f;
+	color: #ffffd3;
+	font-weight: bold;
+}
+
+.redColor{
+	color: red;
+}

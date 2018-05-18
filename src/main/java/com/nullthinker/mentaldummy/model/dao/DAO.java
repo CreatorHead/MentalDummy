@@ -39,5 +39,10 @@ public interface DAO {
 	 */
 	public User findByConfirmationToken(String token);
 	
+	/**
+	 * To Update the User
+	 * @param user
+	 * @return
+	 */
 	public User updateUser(User user);
 }
