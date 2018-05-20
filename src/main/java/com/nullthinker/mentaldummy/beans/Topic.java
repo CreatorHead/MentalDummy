@@ -10,9 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name="subtopic_details")
+@XmlRootElement
 public class Topic implements Serializable {
 	
 	@Transient
@@ -21,9 +24,11 @@ public class Topic implements Serializable {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "subtopic_id",nullable = false)
+	@XmlElement
 	private int topicID;
 	
 	@Column(name="subtopic_name")
+	@XmlElement
 	private String topicName;
 	
 	@ManyToOne

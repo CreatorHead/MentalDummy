@@ -1,4 +1,4 @@
-package com.nullthinker.metaldummy.configuration;
+package com.nullthinker.mentaldummy.configuration;
 
 import java.util.Properties;
 

@@ -29,3 +29,13 @@ $('#fileUploadInput').on('input',function(){
 		$("#btnValidate").removeAttr('disabled');
 	}
 })
+
+$(function(){
+	$.getJSON('http://localhost:8080/MentalDummy/rest/test/subjectsData',function(data){
+		
+		for(var i=0;i<data.length;i++){
+			$('#subject').append('<option>'+data[i].subjectName+'</option>');
+		}
+	});
+	
+});

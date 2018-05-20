@@ -1,4 +1,4 @@
-package com.nullthinker.metaldummy.configuration;
+package com.nullthinker.mentaldummy.configuration;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;

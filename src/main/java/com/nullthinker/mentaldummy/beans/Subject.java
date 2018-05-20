@@ -14,25 +14,34 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity @Table(name="subject_details"
 ,uniqueConstraints = {@UniqueConstraint(columnNames="subject_name")}
 )
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Subject {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="subject_id")
+	@XmlElement
 	private int subjectID;
 	
 	@NotNull(message="Subject Name should not be null")
 	@Size(min=1,max=100, message="Subject Name should be between 1 to 100 chars")
 	@Column(name="subject_name")
+	@XmlElement
 	private String subjectName;
 	
 	@NotNull
 	@OneToMany(cascade=CascadeType.ALL)
     @JoinColumn(name="subject_id")
+	@XmlElement
 	List<Topic> topics;
 	
 	public int getSubjectID() {
@@ -53,7 +62,6 @@ public class Subject {
 	public void setTopics(List<Topic> topics) {
 		this.topics = topics;
 	}
-	
 	
 	@Override
 	public String toString() {

@@ -1,4 +1,4 @@
-package com.nullthinker.metaldummy.configuration;
+package com.nullthinker.mentaldummy.configuration;
 
 import java.lang.reflect.Method;
 import java.util.concurrent.Executor;

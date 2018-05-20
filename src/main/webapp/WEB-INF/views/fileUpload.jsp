@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Mental Dummy</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,8 +10,6 @@
 	href="../../MentalDummy/resources/css/general/genericLayout.css">
 <link rel="stylesheet" type="text/css"
 	href="../../MentalDummy/resources/css/questionUpload/questionUpload.css">
-</head>
-<body>
 	<div class="container container-table">
 		<div class='row vertical-center-row'>
 			<div class="panel panel-default">
@@ -39,10 +35,7 @@
 							<label for="subject">Select a Subject:</label> 
 							<select
 								class="form-control" id="subject" name='subject'>
-								<option>Java</option>
-								<option>SQL</option>
-								<option>J2EE</option>
-								<option>Manual Testing</option>
+								
 							</select>
 						</div>
 
@@ -116,5 +109,3 @@
 		src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
 	<script type="text/javascript"
 		src="../../MentalDummy/resources/js/questionUpload/questionUpload.js"></script>
-</body>
-</html>

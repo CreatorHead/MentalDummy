@@ -49,7 +49,7 @@ public interface DAO {
 	public User updateUser(User user);
 	
 	/**
-	 * To Get the list of subjects and there subtopics
+	 * To Get the list of subjects and there sub-topics
 	 * @return
 	 */
 	public List<Subject> getSubjects();
