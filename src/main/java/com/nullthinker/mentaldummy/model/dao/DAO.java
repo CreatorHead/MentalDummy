@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.nullthinker.mentaldummy.beans.QuestionPaper;
 import com.nullthinker.mentaldummy.beans.Subject;
 import com.nullthinker.mentaldummy.beans.User;
 
@@ -53,4 +54,11 @@ public interface DAO {
 	 * @return
 	 */
 	public List<Subject> getSubjects();
+	
+	/**
+	 * To insert questions into the database
+	 * @param qsp
+	 * @return
+	 */
+	public boolean insertQuestions(QuestionPaper qsp);
 }

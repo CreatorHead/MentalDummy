@@ -1,7 +1,9 @@
 <%@page import="com.nullthinker.mentaldummy.beans.User"%>
-<%@page import="javax.jms.Session"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+
+<%@ page isELIgnored="false" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -48,17 +50,16 @@ html, body, .container-table {
 		}else{%>
 			<jsp:include page="/WEB-INF/views/Header.jsp" />
 		<% }%>
-	
 	<div class="container container-table">
 		<div class='row vertical-center-row'>
 			<div class="panel panel-default">
 				<div class='panel-heading'>
 					<h4>
-						<strong>Error</strong>
+						<strong>Message</strong>
 					</h4>
 				</div>
 				<div class='panel-body'>
-					<p>Oops! Something went Wrong</p>
+					<p id="redColor">${msg}</p>
 				</div>
 			</div>
 		</div>

@@ -1,5 +1,6 @@
 package com.nullthinker.mentaldummy.beans;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 
 import javax.persistence.Column;
@@ -12,8 +13,10 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="user_confirmation_details")
-public class UserConfirmationDetails {
+public class UserConfirmationDetails implements Serializable {
 	
+	private static final long serialVersionUID = 2776140978824240819L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@NotNull(message="confirmation ID should not be null")

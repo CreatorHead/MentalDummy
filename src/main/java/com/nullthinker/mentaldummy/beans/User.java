@@ -21,9 +21,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
 
 
 
@@ -56,9 +57,7 @@ public class User implements Serializable {
 	@Column(name="lastname")
 	private String lastname;
 
-	@NotNull(message="Email should not be null")
 	@Email(message = "Please provide a valid e-mail")
-	@Size(min=1,max=50, message="Email should be between 1 to 50 chars")
 	@Column(name="email")
 	private String email;
 

@@ -28,7 +28,7 @@
 					<%
 						}
 					%>
-					<form id='uploadQuestion' action="./submit/questions" method="post"
+					<form id='uploadQuestion' action="../upload/submit/questions" method="post"
 						enctype="multipart/form-data">
 
 						<div class="form-group">

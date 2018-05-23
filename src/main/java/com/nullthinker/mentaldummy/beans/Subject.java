@@ -1,5 +1,6 @@
 package com.nullthinker.mentaldummy.beans;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -24,8 +25,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 )
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Subject {
+public class Subject implements Serializable {
 	
+	private static final long serialVersionUID = -6894540606635777874L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="subject_id")
@@ -38,7 +41,7 @@ public class Subject {
 	@XmlElement
 	private String subjectName;
 	
-	@NotNull
+	@NotNull(message="Topics should not be null")
 	@OneToMany(cascade=CascadeType.ALL)
     @JoinColumn(name="subject_id")
 	@XmlElement

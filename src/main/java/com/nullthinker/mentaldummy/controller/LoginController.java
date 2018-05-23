@@ -40,22 +40,27 @@ public class LoginController {
 		user.setPassword(hashPasswd);
 		user = mentalDummyDAO.login(user);
 		if(user != null) {
-			httpSession.setAttribute("user", user);
-			if(user.getRoles().contains("admin")) {
-				//for admin
-				redirect= "redirect:../admin/home";
-			}else if(user.getRoles().contains("examiner")) {
-				//for examiner
-				redirect= "redirect:../examiner/home";
-			}else if(user.getRoles().contains("user")) {
-				//for user
-				redirect= "redirect:../user/home";
+			if(user.getConfirmationDetails().isEnabled()) {
+				httpSession.setAttribute("user", user);
+				if(user.getRoles().contains("admin")) {
+					//for admin
+					redirect= "redirect:../admin/home";
+				}else if(user.getRoles().contains("examiner")) {
+					//for examiner
+					redirect= "redirect:../examiner/home";
+				}else if(user.getRoles().contains("user")) {
+					//for user
+					redirect= "redirect:../user/home";
+				}
+			}else {
+				model.addAttribute("msg","Please confirm your email");
+				redirect = "redirect:/login";
 			}
+			
 		}else {
 			model.addAttribute("msg","Login failed. Please provide a valid email and password");
 			redirect = "redirect:/login";
 		}
-		
 		return redirect;
 	}
 }

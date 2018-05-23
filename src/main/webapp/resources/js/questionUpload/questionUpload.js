@@ -34,7 +34,7 @@ $(function(){
 	$.getJSON('http://localhost:8080/MentalDummy/rest/test/subjectsData',function(data){
 		
 		for(var i=0;i<data.length;i++){
-			$('#subject').append('<option>'+data[i].subjectName+'</option>');
+			$('#subject').append('<option name=\'subject\' value='+data[i].subjectName+'>'+data[i].subjectName+'</option>');
 		}
 	});
 	

@@ -13,6 +13,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.nullthinker.mentaldummy.beans.QuestionPaper;
 import com.nullthinker.mentaldummy.beans.Subject;
 import com.nullthinker.mentaldummy.beans.User;
 import com.nullthinker.mentaldummy.beans.UserConfirmationDetails;
@@ -165,6 +166,7 @@ public class DAOHibernateImpl implements DAO {
 		return user;
 	}
 
+	
 	@Override
 	public List<Subject> getSubjects() {
 		try {
@@ -181,5 +183,17 @@ public class DAOHibernateImpl implements DAO {
 		}
 	}
 
-	
+	@Override
+	public boolean insertQuestions(QuestionPaper qsp) {
+		try {
+			Session session = sessionFactory.openSession();
+			session.getTransaction().begin();
+			session.save(qsp);
+			session.getTransaction().commit();
+			return true;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }

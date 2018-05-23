@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import org.apache.commons.io.FileUtils;
@@ -18,14 +20,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 
+import com.nullthinker.mentaldummy.beans.QuestionPaper;
+import com.nullthinker.mentaldummy.beans.QuestionPaperOtherDetails;
+import com.nullthinker.mentaldummy.beans.User;
 import com.nullthinker.mentaldummy.mode.services.ApachePOIExcelRead;
+import com.nullthinker.mentaldummy.model.dao.DAO;
 
 @Controller @PropertySource(value = { "classpath:fileUpload.properties" })
 public class QuestionUploadController {
 	
 	@Autowired private Environment environment;
 	@Autowired private ApachePOIExcelRead apachePOIExcelRead;
-	
+	@Autowired private DAO mentalDummyDAO;
 //	@RequestMapping(value="upload/questions",method=RequestMethod.GET)
 //	public String uploadFile(){
 //		return "fileUpload";
@@ -36,8 +42,9 @@ public class QuestionUploadController {
 	public String processFile(@RequestPart("file") Part file, Model model,
 			@RequestParam("subject")String subject,@RequestParam("duration") Integer duration,
 			@RequestParam("passMarks") Double passMarks,@RequestParam("diffLvl")String diffLevel,
-			@RequestParam("passkey") String passKey
+			@RequestParam("passkey") String passKey,HttpServletRequest req
 			){
+		List<StringBuilder> csvFormatList = null;
 		String state = "";
 		try {
 			String filePath = environment.getRequiredProperty("uploadLocation")+"/"+file.getSubmittedFileName();
@@ -47,7 +54,7 @@ public class QuestionUploadController {
 			
 			
 			try {
-				List<StringBuilder> csvFormatList = apachePOIExcelRead.reader(filePath);
+				csvFormatList = apachePOIExcelRead.reader(filePath);
 			} catch (Exception e) {
 				e.printStackTrace();
 				state = e.getMessage();
@@ -80,8 +87,31 @@ public class QuestionUploadController {
 //				model.addAttribute("msg",state);
 //				return "redirect:../questions";
 //			}
+
+			QuestionPaper questionPaper = new QuestionPaper();
+			questionPaper.setQuestions(csvFormatList);
+			questionPaper.setSubjectName(subject);
+			questionPaper.setSubtopicName("all");
+			HttpSession session = req.getSession(false);
+			User user = (User)session.getAttribute("user");
+			questionPaper.setSubmittedBy(user.getUserid());
+			QuestionPaperOtherDetails otherDetails = new QuestionPaperOtherDetails();
+			otherDetails.setDiffLevel(diffLevel);
+			otherDetails.setDuration(duration);
+			otherDetails.setPassingMarks(passMarks);
+			otherDetails.setPassKey(passKey);
+			questionPaper.setOtherDetails(otherDetails);
 			
-			state = "success";
+			boolean status = mentalDummyDAO.insertQuestions(questionPaper);
+			if(!status) {
+				model.addAttribute("msg",state);
+				return "errMsg";
+			}else {
+				state = "Questions are uploaded. Test paper is ready";
+				model.addAttribute("msg",state);
+				return "successMsg";
+			}
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 			state = "failed";
